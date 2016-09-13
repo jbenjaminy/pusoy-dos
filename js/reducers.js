@@ -7,7 +7,7 @@ var reducers = function(state, action) {
     	// if no 'dealer' in state, sets player one as dealer, otherwise advances to next player as dealer
     	var dealer = 1;
     	if (state.dealer) {
-    		if (state.dealer < 4)
+    		if (state.dealer < 4) {
     			dealer = state.dealer + 1;
     		}
     	}
@@ -15,7 +15,7 @@ var reducers = function(state, action) {
         return Object.assign({}, { 
         	inGame: true,
         	hands: [],
-        	dealer: dealer
+        	dealer: dealer,
 
         });
     } else if (action.type === actions.SHUFFLE_SUCCESS) {
@@ -48,11 +48,11 @@ var reducers = function(state, action) {
     		handFour = hands[3];
     	}
     	return Object.assign({}, state, {
-    		hands: hands;
-    		handOne: handOne;
-    		handTwo: handTwo;
-    		handThree: handThree;
-    		handFour: handFour;
+    		hands: hands,
+    		handOne: handOne,
+    		handTwo: handTwo,
+    		handThree: handThree,
+    		handFour: handFour,
     	});
     } else if (action.type === actions.SHUFFLE_ERROR) {
         return state;
