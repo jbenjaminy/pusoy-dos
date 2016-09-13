@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Baloo+Paaji);
 
 @background: #D1D1D1;
-@text: #1F120B
+@text: #1F120B;
 
 html {
 	height: 820px;
@@ -19,6 +19,13 @@ html {
 			background-color: @background;
 
 			.game-container {
+
+				.felt {
+					background-image: url(../img/green-felt.png);
+					border: 1px solid @text;
+					height: 500px;
+					width: 500px;
+				}
 			}
 		}
 	}

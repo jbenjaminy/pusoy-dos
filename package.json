@@ -1,10 +1,11 @@
 {
   "name": "pusoy-dos",
   "version": "1.0.0",
-  "description": "backgammon game made using React and Python",
+  "description": "'Pusoy Dos' a.k.a. 'Filipino poker' is a popular type of 'shedding' card game, which uses poker hand rankings.",
   "main": "server.js",
   "scripts": {
     "test": "mocha --compilers js:babel-register test/**/*.js*",
+    "start": "node server.js",
     "mkdir": "mkdir -p build",
     "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:css && npm run build:js && npm run build:img",
     "watch": "npm run watch:html & npm run watch:css & npm run watch:js & npm run watch:img",
@@ -32,6 +33,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "events": "^1.1.1",
     "express": "^4.14.0",
     "isomorphic-fetch": "^2.2.1",
     "less": "^2.7.1",
@@ -39,7 +41,8 @@
     "react-dom": "^15.3.0",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "unirest": "^0.5.1"
   },
   "devDependencies": {
     "babel-core": "^6.11.4",
