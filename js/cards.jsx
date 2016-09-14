@@ -13,9 +13,11 @@ var Cards = React.createClass({
 	 		return null
 	 	} else {
 			var cards = this.props.cards.map(function(card) {
-				var classList = card.selected ? 'card' : 'card selected';
+				//card.selected doesn't exist
+				console.log(card);
+				var classList = card.selected ? 'card selected' : 'card';
 	 			return (
-					<li key={card.code} onClick={() => this.selectCard(card.code, this.props.hand)}>
+					<li key={card.code} onClick={() => this.selectCard(card.code, this.props.handNum)}>
 						<img className={classList} src={card.image} height='80px' width='57px' />
 					</li>
 				);

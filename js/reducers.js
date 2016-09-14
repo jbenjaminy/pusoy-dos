@@ -68,7 +68,6 @@ var reducers = function(state, action) {
         var handTwo = state.handTwo;
         var handThree = state.handThree;
         var handFour = state.handFour;
-        console.log(action);
         var updatedHand = state[action.hand].slice();
         updatedHand.forEach(function(card, index){
             if (action.code === card.code) {
