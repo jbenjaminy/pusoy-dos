@@ -8,6 +8,25 @@ var startGame = function() {
     };
 };
 
+// opens/closes players hand to see cards;
+var SHOW = 'SHOW';
+var show = function(hand) {
+	return {
+		type: SHOW,
+		hand: hand
+	};
+};
+
+// select/unselect card from hand;
+var SELECT = 'SELECT';
+var select = function(code, hand) {
+	return {
+		type: SELECT,
+		code: code,
+		hand: hand
+	};
+};
+
 // makes call to DECK OF CARDS API for deck to be shuffled; sets rankings for returned array of cards and 'deals' cards, separating them into four hands
 var shuffle = function() {
     return function(dispatch) {
@@ -30,9 +49,12 @@ var shuffle = function() {
         .then(function(response) {
             return response.json();
         })
-        .then(function(hands) {
+        .then(function(data) {
+        	console.log('data', data);
+        	var hands = data.hands;
+        	var firstMove = data.firstMove;
             return dispatch(
-                shuffleSuccess(hands)
+                shuffleSuccess(hands, firstMove)
             );
         })
         .catch(function(error) {
@@ -45,10 +67,11 @@ var shuffle = function() {
 
 // passes 'hands' array of four arrays containing each player's 'hand' for a single game
 var SHUFFLE_SUCCESS = 'SHUFFLE_SUCCESS';
-var shuffleSuccess = function(hands) {
+var shuffleSuccess = function(hands, firstMove) {
     return {
         type: SHUFFLE_SUCCESS,
-        hands: hands
+        hands: hands,
+        firstMove: firstMove
     };
 };
 
@@ -63,6 +86,12 @@ var shuffleError = function(error) {
 /*----------- EXPORTS ----------*/
 exports.START_GAME = START_GAME;
 exports.startGame = startGame;
+
+exports.SHOW = SHOW;
+exports.show = show;
+
+exports.SELECT = SELECT;
+exports.select = select;
 
 exports.shuffle = shuffle;
 exports.SHUFFLE_SUCCESS = SHUFFLE_SUCCESS;

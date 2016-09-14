@@ -39,6 +39,7 @@ app.use(function(request, response, next) {
 app.get('/shuffle', function(request, response) {
   // define empty array of hands for four players
   var hands = [[], [], [], []];
+  var firstMove = null;
   // shuffles existing deck of cards
   var shuffleDeck = getFromApi('ouk03xkvphxp/shuffle', {
   });
@@ -79,19 +80,30 @@ app.get('/shuffle', function(request, response) {
         } else if (suit === 'HEARTS') {
           rank = rank - 1;
         }
-        console.log('rank -->', rank)
-        // sets rank property up within each card object
-        rank = card.rank
-        console.log('card -->', card)
-
+        // get index for hand containing the lowest card (3C) for first move 
+        if (rank === 1) {
+          firstMove = index%4
+        }
+        // sets 'rank' & 'selected' properties within each card object
+        card.rank = rank;
+        card.selected = false;
         // 'deals' each card in order, alternating to next 'hand' array with each increase of index
         hands[index%4].push(card);
       });
+      console.log('hands -->', hands);
+      // returns populated hands array
+      response.json({'hands': hands, 'firstMove': firstMove});
+    });
+  // error handling
+    dealCards.on('error', function(error) {
+      console.error(code);
+      response.sendStatus(error);
     });
   });
-  console.log('hands -->', hands);
-  // returns populated hands array
-  return response.json(hands);
+  shuffleDeck.on('error', function(error) {
+      console.error(code);
+      response.sendStatus(error);
+  });
 });
 
 /* SERVER SET-UP */

@@ -1,6 +1,6 @@
 var React = require('react');
-var TopDisplay = require('./display');
-var Board = require('./felt');
+var Display = require('./display');
+var Felt = require('./felt');
 
 var GameContainer = React.createClass({
 	 render: function() {
