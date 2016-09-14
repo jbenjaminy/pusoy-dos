@@ -10,13 +10,13 @@ Deck of Cards API: http://deckofcardsapi.com/
 		5) Sort cards in each hand by ranking.
 		6) Move all logic to backend. 
 		7) Implement socket.io
+		8) Refactor!!!
 
 	# ADDITIONAL FEATURES:
-		1) REFACTOR!!!
-		2) Integrate hands, wins, turn, etc. into state.players objects
-		3) Get rid of 'view cards' button and just click on card backs instead to open/close hand.
-		4) Make ULs expand when viewing player 2 & player 4's cards.
-		5) Input player's names/store as state.
+		1) Integrate hands, wins, turn, etc. into state.players objects
+		2) Get rid of 'view cards' button and just click on card backs instead to open/close hand.
+		3) Make ULs expand when viewing player 2 & player 4's cards.
+		4) Input player's names/store as state.
 
 <!-- Play cards pseudo-code -->
 -check that first move of game includes three of clubs.
