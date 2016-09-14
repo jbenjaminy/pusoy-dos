@@ -1,31 +1,25 @@
 var React = require('react');
+var connect = require('react-redux').connect;
+var actions = require('./actions');
 
 var Cards = React.createClass({
-	selectCard: function() {
-		console.log('hello');
-		// var props = this.props;
-		// if (code != 'back') {
-		// 	return function() {
-		// 		props.dispatch(actions.select(code, hand));
-		// 	}
-		// }
+	selectCard: function(code, hand) {
+		if (code != 'back') {
+			this.props.dispatch(actions.select(code, hand));
+		}
 	},
 	render: function() {
 	 	if (!this.props.cards) {
 	 		return null
 	 	} else {
-				var cards = this.props.cards.map(function(card) {
-	 			// if (!card.selected) {
-	 				// return <li key={card.code}><img className='card selected' src={card.image} height='80px' width='57px'></img></li>
- 				// } else {
-	 			return <li key={card.code} onClick={() => this.selectCard()}><img className='card' src={card.image} height='80px' width='57px'></img></li>
-	 			// }
+			var cards = this.props.cards.map(function(card) {
+				var classList = card.selected ? 'card' : 'card selected';
+	 			return (
+					<li key={card.code} onClick={() => this.selectCard(card.code, this.props.hand)}>
+						<img className={classList} src={card.image} height='80px' width='57px' />
+					</li>
+				);
 			}, this);
-
-			// var cards = [];
-			// this.props.cards.forEach(function(card) {
-			// 	cards.push(<li key={card.code} onClick={() => this.selectCard()}><img className='card' src={card.image} height='80px' width='57px'></img></li>);
-			// }, this);
 	 	}
     return (
     	<ul>
@@ -35,8 +29,6 @@ var Cards = React.createClass({
 	}
 });
 
-//
-//	selectCard: function(code, hand) {
-//onClick={this.selectCard(card.code, this.props.hand)}
+var Container = connect()(Cards);
 
-module.exports = Cards;
+module.exports = Container;

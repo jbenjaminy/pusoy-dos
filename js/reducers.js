@@ -11,14 +11,14 @@ var reducers = function(state, action) {
     			dealer = state.dealer + 1;
     		}
     	}
-        return Object.assign({}, { 
+        return Object.assign({}, {
         	inGame: true,
         	hands: [],
         	dealer: dealer,
-            players: { 
-                one: {name: 'Player One'}, 
-                two: {name: 'Player Two'}, 
-                three: {name: 'Player Three'}, 
+            players: {
+                one: {name: 'Player One'},
+                two: {name: 'Player Two'},
+                three: {name: 'Player Three'},
                 four: {name: 'Player Four'}
             },
         });
@@ -56,18 +56,19 @@ var reducers = function(state, action) {
             }
             showHandFour.push({code: 'back', image: 'card-back-blue.png'});
         }
-        return Object.assign({}, state, { 
+        return Object.assign({}, state, {
             showHandOne: showHandOne,
             showHandTwo: showHandTwo,
             showHandThree: showHandThree,
             showHandFour: showHandFour,
 
         });
-    } else if (action.type === actions.SHOW) {
+    } else if (action.type === actions.SELECT) {
         var handOne = state.handOne;
         var handTwo = state.handTwo;
         var handThree = state.handThree;
         var handFour = state.handFour;
+        console.log(action);
         var updatedHand = state[action.hand].slice();
         updatedHand.forEach(function(card, index){
             if (action.code === card.code) {
@@ -87,7 +88,7 @@ var reducers = function(state, action) {
         } else if (action.hand === 'handFour') {
             handFour = updatedHand;
         }
-        return Object.assign({}, state, { 
+        return Object.assign({}, state, {
             handOne: handOne,
             handTwo: handTwo,
             handThree: handThree,
