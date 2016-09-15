@@ -2,6 +2,10 @@ var actions = require('./actions');
 
 var reducers = function(state, action) {
     state = state || {};
+    var handOne = state.handOne;
+    var handTwo = state.handTwo;
+    var handThree = state.handThree;
+    var handFour = state.handFour;
 
     if (action.type === actions.START_GAME) {
     	// if no 'dealer' in state, sets player one as dealer, otherwise advances to next player as dealer
@@ -64,10 +68,6 @@ var reducers = function(state, action) {
 
         });
     } else if (action.type === actions.SELECT) {
-        var handOne = state.handOne;
-        var handTwo = state.handTwo;
-        var handThree = state.handThree;
-        var handFour = state.handFour;
         var updatedHand = state[action.hand].slice();
         var selectedArr = state.selected.slice();
         updatedHand.forEach(function(card, index){
@@ -108,8 +108,29 @@ var reducers = function(state, action) {
     } else if (action.type === actions.PLAY_CARDS) {
         var players = ['handOne', 'handTwo', 'handThree', 'handFour'];
         var oldTurn = players.indexOf(state.turn);
-        console.log(oldTurn);
+
+        var currentHand = state[state.turn].slice();
+        action.cards.forEach(function(selectCard, idx) {
+            currentHand = currentHand.filter(function(card) {
+                return card !== selectCard;
+            });
+        });
+
+        if (state.turn === 'handOne') {
+            handOne = currentHand;
+        } else if (state.turn === 'handTwo') {
+            handTwo = currentHand;
+        } else if (state.turn === 'handThree') {
+            handThree = currentHand;
+        } else if (state.turn === 'handFour') {
+            handFour = currentHand;
+        }
+
         return Object.assign({}, state, {
+            handOne: handOne,
+            handTwo: handTwo,
+            handThree: handThree,
+            handFour: handFour,
             turn: players[(oldTurn + 1) % 4]
         });
     } else if (action.type === actions.SHUFFLE_SUCCESS) {

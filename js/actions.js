@@ -28,9 +28,10 @@ var select = function(code, hand) {
 };
 
 var PLAY_CARDS = 'PLAY_CARDS';
-var playCards = function() {
+var playCards = function(cards) {
     return {
         type: PLAY_CARDS,
+        cards: cards
     };
 };
 

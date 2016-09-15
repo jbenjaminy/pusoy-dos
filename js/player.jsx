@@ -5,7 +5,11 @@ var Cards = require('./cards');
 
 var Player = React.createClass({
 	playCards: function() {
-		this.props.dispatch(actions.playCards());
+		this.props.dispatch(actions.playCards(this.props.selected));
+	},
+
+	passTurn: function() {
+		// should have a counter of number of passes in a row
 	},
 
 	showHand: function(hand) {
@@ -31,11 +35,12 @@ var Player = React.createClass({
 		}
 
 		var cards = eval('this.props.' + this.props.hand);
+		console.log(cards, 'cards');
 
 		if (!cards) {
 			return null;
 		} else {
-			var cardsArr = cards.map(function(card) {
+			var cardsArr = cards.map(function(card, idx) {
 				var classList = card.selected ? 'card selected' : 'card';
 				return (
 					<Cards
@@ -43,6 +48,7 @@ var Player = React.createClass({
 						classList={classList}
 						handNum={this.props.hand}
 						selectCard={this.selectCard}
+						key={idx}
 					/>
 				);
 			}, this);
@@ -62,7 +68,7 @@ var Player = React.createClass({
 var mapStateToProps = function(state, props) {
 	return {
 		state: state,
-		handOne: state.showHandOne,
+		handOne: state.handOne,
 		handTwo: state.showHandTwo,
 		handThree: state.showHandThree,
 		handFour: state.showHandFour,
