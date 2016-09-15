@@ -81,6 +81,7 @@ var reducers = function(state, action) {
                 }
             }
         });
+        console.log(state.turn);
         if (action.hand === 'handOne') {
             handOne = updatedHand;
         } else if (action.hand === 'handTwo') {

@@ -16,7 +16,6 @@ var Player = React.createClass({
 	},
 
 	selectCard: function(code, hand) {
-		console.log('hello');
 		if (code != 'back') {
 			this.props.dispatch(actions.select(code, hand));
 		}
@@ -67,7 +66,8 @@ var mapStateToProps = function(state, props) {
 		handTwo: state.showHandTwo,
 		handThree: state.showHandThree,
 		handFour: state.showHandFour,
-		turn: state.turn
+		turn: state.turn,
+		selected: state.selected,
 	};
 };
 
