@@ -17,22 +17,23 @@ var Felt = React.createClass({
 					<button className='start' onClick={this.shuffleCards}>Start Game</button>
 				</div>
 			);
-		} 
+		}
 		if (this.props.inGame && this.props.hands.length === 0) {
 			return (
 				<div className='felt'>
 				</div>
 			);
 		}
+		console.log('end of felt');
 		return (
 			<div className='felt'>
-				<Player id='player-three' name='Player Three' hand='handThree'/>
+				<Player id='player-three' name='Player Three' hand='handThree' test={this.props.state} />
 				<div className='mid'>
-					<Player id='player-two' name='Player Two' hand='handTwo'/>
+					<Player id='player-two' name='Player Two' hand='handTwo' test={this.props.state} />
 					<div className='board'></div>
-					<Player id='player-four' name='Player Four' hand='handFour'/>
+					<Player id='player-four' name='Player Four' hand='handFour' test={this.props.state} />
 				</div>
-				<Player id='player-one' name='Player One' hand='handOne'/>
+				<Player id='player-one' name='Player One' hand='handOne' test={this.props.state} />
 			</div>
 		);
 	}

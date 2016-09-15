@@ -9,12 +9,13 @@ var Cards = React.createClass({
 		}
 	},
 	render: function() {
+		console.log('asdfao');
 	 	if (!this.props.cards) {
 	 		return null
 	 	} else {
 			var cards = this.props.cards.map(function(card) {
 				//card.selected doesn't exist
-				console.log(card);
+				console.log(card.selected);
 				var classList = card.selected ? 'card selected' : 'card';
 	 			return (
 					<li key={card.code} onClick={() => this.selectCard(card.code, this.props.handNum)}>

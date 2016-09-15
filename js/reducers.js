@@ -71,7 +71,9 @@ var reducers = function(state, action) {
         var updatedHand = state[action.hand].slice();
         updatedHand.forEach(function(card, index){
             if (action.code === card.code) {
+                console.log('inside if')
                 if (card.selected === false) {
+                    console.log('selected is false');
                     card.selected = true;
                 } else {
                     card.selected = false;
