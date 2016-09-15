@@ -1,5 +1,66 @@
 var actions = require('./actions');
 
+function isHandValid(hand) {
+    var cardNum = hand.length;
+
+    if (cardNum < 1 || cardNum === 4 || cardNum > 5) {
+        return false;
+    }
+
+    if (cardNum === 2 || cardNum === 3) {
+        var value = hand[0].value;
+        var testHand = hand.filter(function(card) {
+            return card.value === value;
+        });
+
+        if (testHand.length === hand.length) {
+            return true;
+        }
+
+        return false;
+    }
+
+    if (cardNum === 5) {
+        var isStraight;
+        var isFlush;
+        var isFullHouse;
+        var isStraightFlush;
+
+        var values = [];
+        hand.forEach(function(card) {
+            if (card.value === 'JACK') {
+                var value = 11;
+            } else if (card.value === 'QUEEN') {
+                value = 12;
+            } else if (card.value === 'KING') {
+                value = 13;
+            } else if (card.value === 'ACE') {
+                value = 14;
+            } else {
+                value = card.value;
+            }
+            
+            values.push(value);
+        });
+
+        values.sort(function(a, b) {
+            return a > b;
+        });
+    }
+
+    if (!state.prevMove && hand.length ) {
+        playedHand = hand;
+    } else if (hand.length !== state.prevMove.length) {
+        return state;
+    } else {
+        if (hand.length === 1 && hand[0].rank > state.prevMove[0].rank) {
+            playedHand = hand;
+        } else if (hand.length === 2 && hand[0].value === action.cards[1].value) {
+            console.log('double');
+        }
+    }
+}
+
 var reducers = function(state, action) {
     state = state || {};
     var handOne = state.handOne;
@@ -76,6 +137,7 @@ var reducers = function(state, action) {
         } else if (action.hand === 'handFour') {
             handFour = updatedHand;
         }
+        console.log(selectedArr);
 
         return Object.assign({}, state, {
             handOne: handOne,
@@ -85,32 +147,52 @@ var reducers = function(state, action) {
             selected: selectedArr,
         });
     } else if (action.type === actions.PLAY_CARDS) {
+        var playedHand;
+        var isValid = isHandValid(action.cards);
+
+/*
+if (!state.prevMove && hand.length ) {
+    playedHand = hand;
+} else if (hand.length !== state.prevMove.length) {
+    return state;
+} else {
+    if (hand.length === 1 && hand[0].rank > state.prevMove[0].rank) {
+        playedHand = hand;
+    } else if (hand.length === 2 && hand[0].value === action.cards[1].value) {
+        console.log('double');
+    }
+}
+ */
+
         var players = ['handOne', 'handTwo', 'handThree', 'handFour'];
         var oldTurn = players.indexOf(state.turn);
 
-        var currentHand = state[state.turn].slice();
+        var currentTurn = state[state.turn].slice();
         action.cards.forEach(function(selectCard, idx) {
-            currentHand = currentHand.filter(function(card) {
+            currentTurn = currentTurn.filter(function(card) {
                 return card !== selectCard;
             });
         });
 
         if (state.turn === 'handOne') {
-            handOne = currentHand;
+            handOne = currentTurn;
         } else if (state.turn === 'handTwo') {
-            handTwo = currentHand;
+            handTwo = currentTurn;
         } else if (state.turn === 'handThree') {
-            handThree = currentHand;
+            handThree = currentTurn;
         } else if (state.turn === 'handFour') {
-            handFour = currentHand;
+            handFour = currentTurn;
         }
+        console.log(action.hand);
 
         return Object.assign({}, state, {
             handOne: handOne,
             handTwo: handTwo,
             handThree: handThree,
             handFour: handFour,
-            turn: players[(oldTurn + 1) % 4]
+            turn: players[(oldTurn + 1) % 4],
+            selected: [],
+            prevMove: playedHand
         });
     } else if (action.type === actions.SHUFFLE_SUCCESS) {
     	var dealer = state.dealer;

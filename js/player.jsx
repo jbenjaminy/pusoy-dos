@@ -32,14 +32,10 @@ var Player = React.createClass({
 		var currentHand = currentHand.join('');
 
 		var classes = 'player ' + this.props.id;
-		var nameClasses = 'name ';
-		var submitButton;
-		if (this.props.turn === this.props.hand) {
-			nameClasses += 'turn';
-			submitButton = <button onClick={this.playCards}>Play Cards</button>;
-		}
+		var nameClasses = this.props.turn === this.props.hand ? 'name turn' : 'name';
+		var submitButton = this.props.turn === this.props.hand ? <button onClick={this.playCards}>Play Cards</button> : '';
 
-		var cards = eval('this.props.' + this.props.hand);
+		var cards = eval(`this.props.${this.props.hand}`);
 
 		var showHand = eval(`this.props.show${currentHand}`);
 
