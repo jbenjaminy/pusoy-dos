@@ -25,7 +25,7 @@ var Player = React.createClass({
 		var classes = 'player ' + this.props.id;
 		var nameClasses = 'name ';
 		var submitButton;
-		if (this.props.turn === this.props.name) {
+		if (this.props.turn === this.props.hand) {
 			nameClasses += 'turn';
 			submitButton = <button onClick={this.playCards}>Play Cards</button>;
 		}

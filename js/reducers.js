@@ -72,16 +72,22 @@ var reducers = function(state, action) {
         var selectedArr = state.selected.slice();
         updatedHand.forEach(function(card, index){
             if (action.code === card.code) {
-                if (card.selected === false) {
+                if (!card.selected) {
                     card.selected = true;
-                    selectedArr.push(card);
                 } else {
                     card.selected = false;
-                    selectedArr.splice(selectedArr.indexOf(card), 1);
+                }
+
+                if (action.hand === state.turn) {
+                    if (!card.selected) {
+                        selectedArr.splice(selectedArr.indexOf(card), 1);
+                    } else {
+                        selectedArr.push(card);
+                    }
                 }
             }
         });
-        console.log(state.turn);
+        
         if (action.hand === 'handOne') {
             handOne = updatedHand;
         } else if (action.hand === 'handTwo') {
@@ -117,13 +123,13 @@ var reducers = function(state, action) {
     		handThree = hands[1];
     		handFour = hands[2];
             if (firstMove === 0) {
-                turn = 'Player Two';
+                turn = 'handTwo';
             } else if (firstMove === 1) {
-                turn = 'Player Three';
+                turn = 'handThree';
             } else if (firstMove === 2) {
-                turn = 'Player Four';
+                turn = 'handFour';
             } else if (firstMove === 3) {
-                turn = 'Player One';
+                turn = 'handOne';
             }
     	} else if (dealer === 2) {
     		handOne = hands[2];
@@ -131,13 +137,13 @@ var reducers = function(state, action) {
     		handThree = hands[0];
     		handFour = hands[1];
             if (firstMove === 0) {
-                turn = 'Player Three';
+                turn = 'handThree';
             } else if (firstMove === 1) {
-                turn = 'Player Four';
+                turn = 'handFour';
             } else if (firstMove === 2) {
-                turn = 'Player One';
+                turn = 'handOne';
             } else if (firstMove === 3) {
-                turn = 'Player Two';
+                turn = 'handTwo';
             }
     	} else if (dealer === 3) {
     		handOne = hands[1];
@@ -145,13 +151,13 @@ var reducers = function(state, action) {
     		handThree = hands[3];
     		handFour = hands[0];
             if (firstMove === 0) {
-                turn = 'Player Four';
+                turn = 'handFour';
             } else if (firstMove === 1) {
-                turn = 'Player One';
+                turn = 'handOne';
             } else if (firstMove === 2) {
-                turn = 'Player Two';
+                turn = 'handTwo';
             } else if (firstMove === 3) {
-                turn = 'Player Three';
+                turn = 'handThree';
             }
     	} else if (dealer === 4) {
     		handOne = hands[0];
@@ -159,13 +165,13 @@ var reducers = function(state, action) {
     		handThree = hands[2];
     		handFour = hands[3];
             if (firstMove === 0) {
-                turn = 'Player One';
+                turn = 'handOne';
             } else if (firstMove === 1) {
-                turn = 'Player Two';
+                turn = 'handTwo';
             } else if (firstMove === 2) {
-                turn = 'Player Three';
+                turn = 'handThree';
             } else if (firstMove === 3) {
-                turn = 'Player Four';
+                turn = 'handFour';
             }
     	}
     	return Object.assign({}, state, {
