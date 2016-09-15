@@ -5,7 +5,7 @@ var Cards = require('./cards');
 
 var Player = React.createClass({
 	playCards: function() {
-		console.log('hello');
+		this.props.dispatch(actions.playCards());
 	},
 
 	showHand: function(hand) {

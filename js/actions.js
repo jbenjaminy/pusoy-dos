@@ -100,6 +100,9 @@ exports.show = show;
 exports.SELECT = SELECT;
 exports.select = select;
 
+exports.PLAY_CARDS = PLAY_CARDS;
+exports.playCards = playCards;
+
 exports.shuffle = shuffle;
 exports.SHUFFLE_SUCCESS = SHUFFLE_SUCCESS;
 exports.shuffleSuccess = shuffleSuccess;

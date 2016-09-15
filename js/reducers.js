@@ -87,7 +87,7 @@ var reducers = function(state, action) {
                 }
             }
         });
-        
+
         if (action.hand === 'handOne') {
             handOne = updatedHand;
         } else if (action.hand === 'handTwo') {
@@ -106,7 +106,12 @@ var reducers = function(state, action) {
             selected: selectedArr,
         });
     } else if (action.type === actions.PLAY_CARDS) {
-
+        var players = ['handOne', 'handTwo', 'handThree', 'handFour'];
+        var oldTurn = players.indexOf(state.turn);
+        console.log(oldTurn);
+        return Object.assign({}, state, {
+            turn: players[(oldTurn + 1) % 4]
+        });
     } else if (action.type === actions.SHUFFLE_SUCCESS) {
     	var dealer = state.dealer;
     	var hands = action.hands;
