@@ -68,7 +68,7 @@ var Player = React.createClass({
 var mapStateToProps = function(state, props) {
 	return {
 		state: state,
-		handOne: state.handOne,
+		handOne: state.showHandOne,
 		handTwo: state.showHandTwo,
 		handThree: state.showHandThree,
 		handFour: state.showHandFour,
