@@ -15,8 +15,14 @@ var Player = React.createClass({
 		}
 	},
 
+	selectCard: function(code, hand) {
+		console.log('hello');
+		if (code != 'back') {
+			this.props.dispatch(actions.select(code, hand));
+		}
+	},
+
 	render: function() {
-		var cards = eval('this.props.' + this.props.hand);
 		var classes = 'player ' + this.props.id;
 		var nameClasses = 'name ';
 		var submitButton;
@@ -25,10 +31,28 @@ var Player = React.createClass({
 			submitButton = <button onClick={this.playCards}>Play Cards</button>;
 		}
 
+		var cards = eval('this.props.' + this.props.hand);
+
+		if (!cards) {
+			return null;
+		} else {
+			var cardsArr = cards.map(function(card) {
+				var classList = card.selected ? 'card selected' : 'card';
+				return (
+					<Cards
+						card={card}
+						classList={classList}
+						handNum={this.props.hand}
+						selectCard={this.selectCard}
+					/>
+				);
+			}, this);
+		}
+
     return (
     	<div className={classes}>
     		<h3 className={nameClasses}>{this.props.name}</h3>
-    		<Cards cards={cards} handNum={this.props.hand} test={this.props.state} />
+    		<ul>{cardsArr}</ul>
     		<button onClick={this.showHand(this.props.hand)}>View Cards</button>
 				<div>{submitButton}</div>
 	    </div>

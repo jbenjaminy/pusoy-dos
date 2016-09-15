@@ -3,29 +3,20 @@ var connect = require('react-redux').connect;
 var actions = require('./actions');
 
 var Cards = React.createClass({
-	selectCard: function(code, hand) {
-		if (code != 'back') {
-			this.props.dispatch(actions.select(code, hand));
-		}
-	},
 	render: function() {
-	 	if (!this.props.cards) {
-	 		return null
-	 	} else {
-			var cards = this.props.cards.map(function(card) {
-				var classList = card.selected ? 'card selected' : 'card';
-	 			return (
-					<li key={card.code} onClick={() => this.selectCard(card.code, this.props.handNum)}>
-						<img className={classList} src={card.image} height='80px' width='57px' />
-					</li>
-				);
-			}, this);
-	 	}
-    return (
-    	<ul>
-    		{cards}
-	    </ul>
-    );
+		return (
+			<li
+				key={this.props.card.code}
+				onClick={() => this.props.selectCard(this.props.card.code, this.props.handNum)}
+			>
+				<img
+					className={this.props.classList}
+					src={this.props.card.image}
+					height='80px'
+					width='57px'
+				/>
+			</li>
+		);
 	}
 });
 

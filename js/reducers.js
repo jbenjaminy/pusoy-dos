@@ -69,14 +69,15 @@ var reducers = function(state, action) {
         var handThree = state.handThree;
         var handFour = state.handFour;
         var updatedHand = state[action.hand].slice();
+        var selectedArr = state.selected.slice();
         updatedHand.forEach(function(card, index){
             if (action.code === card.code) {
-                console.log('inside if')
                 if (card.selected === false) {
-                    console.log('selected is false');
                     card.selected = true;
+                    selectedArr.push(card);
                 } else {
                     card.selected = false;
+                    selectedArr.splice(selectedArr.indexOf(card), 1);
                 }
             }
         });
@@ -89,12 +90,16 @@ var reducers = function(state, action) {
         } else if (action.hand === 'handFour') {
             handFour = updatedHand;
         }
+
         return Object.assign({}, state, {
             handOne: handOne,
             handTwo: handTwo,
             handThree: handThree,
-            handFour: handFour
+            handFour: handFour,
+            selected: selectedArr,
         });
+    } else if (action.type === actions.PLAY_CARDS) {
+
     } else if (action.type === actions.SHUFFLE_SUCCESS) {
     	var dealer = state.dealer;
     	var hands = action.hands;
@@ -168,6 +173,7 @@ var reducers = function(state, action) {
     		handTwo: handTwo,
     		handThree: handThree,
     		handFour: handFour,
+            selected: [],
             showHandOne: [{code: 'back', image: 'card-back-blue.png'}],
             showHandTwo: [{code: 'back', image: 'card-back-blue.png'}],
             showHandThree: [{code: 'back', image: 'card-back-blue.png'}],

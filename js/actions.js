@@ -27,6 +27,13 @@ var select = function(code, hand) {
 	};
 };
 
+var PLAY_CARDS = 'PLAY_CARDS';
+var playCards = function() {
+    return {
+        type: PLAY_CARDS,
+    };
+};
+
 // makes call to DECK OF CARDS API for deck to be shuffled; sets rankings for returned array of cards and 'deals' cards, separating them into four hands
 var shuffle = function() {
     return function(dispatch) {
