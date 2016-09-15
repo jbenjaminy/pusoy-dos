@@ -10,7 +10,6 @@ var Felt = React.createClass({
 		this.props.dispatch(actions.shuffle());
 	},
 	render: function() {
-		console.log(this.props.state);
 		if (!this.props.inGame) {
 			return (
 				<div className='felt'>
@@ -24,7 +23,6 @@ var Felt = React.createClass({
 				</div>
 			);
 		}
-		console.log('end of felt');
 		return (
 			<div className='felt'>
 				<Player id='player-three' name='Player Three' hand='handThree' test={this.props.state} />
