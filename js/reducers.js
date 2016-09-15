@@ -32,40 +32,19 @@ var reducers = function(state, action) {
         var showHandThree = state.showHandThree;
         var showHandFour = state.showHandFour;
         if (action.hand === 'handOne') {
-            if (showHandOne.length === 1) {
-                showHandOne = state.handOne.slice();
-            } else {
-                showHandOne = [];
-            }
-            showHandOne.push({code: 'back', image: 'card-back-blue.png'});
+            showHandOne = !state.showHandOne;
         } else if (action.hand === 'handTwo') {
-            if (showHandTwo.length === 1) {
-                showHandTwo = state.handTwo.slice();
-            } else {
-                showHandTwo = [];
-            }
-            showHandTwo.push({code: 'back', image: 'card-back-blue.png'});
+            showHandTwo = !state.showHandTwo;
         } else if (action.hand === 'handThree') {
-            if (showHandThree.length === 1) {
-                showHandThree = state.handThree.slice();
-            } else {
-                showHandThree = [];
-            }
-            showHandThree.push({code: 'back', image: 'card-back-blue.png'});
+            showHandThree = !state.showHandThree;
         } else if (action.hand === 'handFour') {
-            if (showHandFour.length === 1) {
-                showHandFour = state.handFour.slice();
-            } else {
-                showHandFour = [];
-            }
-            showHandFour.push({code: 'back', image: 'card-back-blue.png'});
+            showHandFour = !state.showHandFour;
         }
         return Object.assign({}, state, {
             showHandOne: showHandOne,
             showHandTwo: showHandTwo,
             showHandThree: showHandThree,
             showHandFour: showHandFour,
-
         });
     } else if (action.type === actions.SELECT) {
         var updatedHand = state[action.hand].slice();
@@ -142,6 +121,7 @@ var reducers = function(state, action) {
     	var handFour = [];
         var firstMove = action.firstMove;
         var turn = '';
+
     	// distributes hands clockwise from player representing 'dealer'
     	if (dealer === 1) {
     		handOne = hands[3];
@@ -207,10 +187,10 @@ var reducers = function(state, action) {
     		handThree: handThree,
     		handFour: handFour,
             selected: [],
-            showHandOne: [{code: 'back', image: 'card-back-blue.png'}],
-            showHandTwo: [{code: 'back', image: 'card-back-blue.png'}],
-            showHandThree: [{code: 'back', image: 'card-back-blue.png'}],
-            showHandFour: [{code: 'back', image: 'card-back-blue.png'}],
+            showHandOne: false,
+            showHandTwo: false,
+            showHandThree: false,
+            showHandFour: false,
             turn: turn,
     	});
     } else if (action.type === actions.SHUFFLE_ERROR) {

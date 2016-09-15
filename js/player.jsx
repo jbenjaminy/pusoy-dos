@@ -26,6 +26,11 @@ var Player = React.createClass({
 	},
 
 	render: function() {
+		var currentHand = this.props.hand.split('');
+		currentHand.shift();
+		currentHand.unshift('H');
+		var currentHand = currentHand.join('');
+
 		var classes = 'player ' + this.props.id;
 		var nameClasses = 'name ';
 		var submitButton;
@@ -35,10 +40,17 @@ var Player = React.createClass({
 		}
 
 		var cards = eval('this.props.' + this.props.hand);
-		console.log(cards, 'cards');
 
-		if (!cards) {
-			return null;
+		var showHand = eval(`this.props.show${currentHand}`);
+
+		if (!showHand) {
+			var cardsArr = <Cards
+										   card={{code: 'back', image: 'card-back-blue.png'}}
+											 classList={'card'}
+											 handNum={this.props.hand}
+											 selectCard={this.selectCard}
+											 key={1}
+										 />
 		} else {
 			var cardsArr = cards.map(function(card, idx) {
 				var classList = card.selected ? 'card selected' : 'card';
@@ -68,10 +80,14 @@ var Player = React.createClass({
 var mapStateToProps = function(state, props) {
 	return {
 		state: state,
-		handOne: state.showHandOne,
-		handTwo: state.showHandTwo,
-		handThree: state.showHandThree,
-		handFour: state.showHandFour,
+		showHandOne: state.showHandOne,
+		showHandTwo: state.showHandTwo,
+		showHandThree: state.showHandThree,
+		showHandFour: state.showHandFour,
+		handOne: state.handOne,
+		handTwo: state.handTwo,
+		handThree: state.handThree,
+		handFour: state.handFour,
 		turn: state.turn,
 		selected: state.selected,
 	};
