@@ -71,15 +71,15 @@ function whatHand(hand) {
             rank: single,
         }
     } else if (hand.length === 2) {
-        var highCard = high[0].rank > high[1].rank ? high[0] : high[1];
+        var highCard = hand[0].rank > hand[1].rank ? hand[0].rank : hand[1].rank;
         return {
             suit: null,
             high: highCard,
             rank: pair,
         }
     } else if (hand.length === 3) {
-        var highCard = high[0].rank > high[1].rank ? high[0] : high[1];
-        highCard = highCard.rank > high[2].rank ? highCard : high[2];
+        var highCard = hand[0].rank > hand[1].rank ? hand[0] : hand[1];
+        highCard = highCard.rank > hand[2].rank ? highCard : hand[2];
         return {
             suit: highCard.suit,
             high: highCard.rank,
@@ -266,7 +266,6 @@ var reducers = function(state, action) {
         } else if (action.hand === 'handFour') {
             handFour = updatedHand;
         }
-        console.log(selectedArr);
 
         return Object.assign({}, state, {
             handOne: handOne,
@@ -276,24 +275,28 @@ var reducers = function(state, action) {
             selected: selectedArr,
         });
     } else if (action.type === actions.PLAY_CARDS) {
-        var playedHand;
+        var currentHand;
         var isValid = isHandValid(action.cards);
-        var handRank = whatHand(action.cards);
-        console.log(isValid);
+        if (!isValid) {
+            return state;
+        }
 
-/*
-if (!state.prevMove && hand.length ) {
-    playedHand = hand;
-} else if (hand.length !== state.prevMove.length) {
-    return state;
-} else {
-    if (hand.length === 1 && hand[0].rank > state.prevMove[0].rank) {
-        playedHand = hand;
-    } else if (hand.length === 2 && hand[0].value === action.cards[1].value) {
-        console.log('double');
-    }
-}
- */
+        var handRank = whatHand(action.cards);
+
+        if (state.prevMove) {
+            var lastMove = state.prevMove.info;
+            if (lastMove.rank !== handRank.rank && act.cards.length !== 5) {
+                return state;
+            } else if (action.cards.length === 5) {
+                if (handRank.rank < lastMove.rank) {
+                    return state;
+                } else if (handRank.rank === lastMove.rank && handRank.high < lastMove.high) {
+                    return state;
+                }
+            } else if (handRank.high < lastMove.high) {
+                return state;
+            }
+        }
 
         var players = ['handOne', 'handTwo', 'handThree', 'handFour'];
         var oldTurn = players.indexOf(state.turn);
@@ -314,7 +317,6 @@ if (!state.prevMove && hand.length ) {
         } else if (state.turn === 'handFour') {
             handFour = currentTurn;
         }
-        console.log(action.hand);
 
         return Object.assign({}, state, {
             handOne: handOne,
@@ -323,7 +325,10 @@ if (!state.prevMove && hand.length ) {
             handFour: handFour,
             turn: players[(oldTurn + 1) % 4],
             selected: [],
-            prevMove: playedHand
+            prevMove: {
+                cards: action.cards,
+                info: handRank,
+            }
         });
     } else if (action.type === actions.SHUFFLE_SUCCESS) {
     	var dealer = state.dealer;

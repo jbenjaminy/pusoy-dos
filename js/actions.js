@@ -58,7 +58,6 @@ var shuffle = function() {
             return response.json();
         })
         .then(function(data) {
-        	console.log('data', data);
         	var hands = data.hands;
         	var firstMove = data.firstMove;
             return dispatch(
