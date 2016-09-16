@@ -289,6 +289,7 @@ var reducers = function(state, action) {
     } else if (action.type === actions.PASS_TURN) {
         var players = ['handOne', 'handTwo', 'handThree', 'handFour'];
         var oldTurn = players.indexOf(state.turn);
+
         return Object.assign({}, state, {
             turn: players[(oldTurn + 1) % 4],
             passes: state.passes + 1,
