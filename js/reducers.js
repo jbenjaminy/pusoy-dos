@@ -4,12 +4,10 @@ function isHandValid(hand, moves) {
     var cardNum = hand.length;
 
     if (cardNum < 1 || cardNum === 4 || cardNum > 5) {
-        console.log('first');
         return false;
     }
 
     if (cardNum === 2 || cardNum === 3) {
-        console.log('second');
         var value = hand[0].value;
         var testHand = hand.filter(function(card) {
             return card.value === value;
@@ -23,7 +21,6 @@ function isHandValid(hand, moves) {
     }
 
     if (moves === 0) {
-        console.log('third');
         var threeClubs = hand.filter(function(card) {
             return card.code === '3C';
         });
@@ -301,7 +298,6 @@ var reducers = function(state, action) {
         if (!isValid) {
             return state;
         }
-        console.log('past valid');
 
         var handRank = whatHand(action.cards);
 
@@ -319,7 +315,6 @@ var reducers = function(state, action) {
                 return state;
             }
         }
-        console.log('bottom');
 
         var players = ['handOne', 'handTwo', 'handThree', 'handFour'];
         var oldTurn = players.indexOf(state.turn);

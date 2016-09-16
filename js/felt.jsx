@@ -2,6 +2,7 @@ var React = require('react');
 var connect = require('react-redux').connect;
 var actions = require('./actions');
 var Player = require('./player');
+var Cards = require('./cards');
 
 
 var Felt = React.createClass({
@@ -23,12 +24,30 @@ var Felt = React.createClass({
 				</div>
 			);
 		}
+
+		var lastMove = [];
+		if (this.props.prevMove) {
+			this.props.prevMove.cards.forEach(function(card) {
+				lastMove.push(
+					<Cards
+				  	card={card}
+					 	classList={'card'}
+					 	handNum={null}
+						selectCard={null}
+						key={1}
+					/>
+				);
+			});
+		}
+
 		return (
 			<div className='felt'>
 				<Player id='player-three' name='Player Three' hand='handThree' test={this.props.state} />
 				<div className='mid'>
 					<Player id='player-two' name='Player Two' hand='handTwo' test={this.props.state} />
-					<div className='board'></div>
+					<div className='board'>
+						{lastMove}
+					</div>
 					<Player id='player-four' name='Player Four' hand='handFour' test={this.props.state} />
 				</div>
 				<Player id='player-one' name='Player One' hand='handOne' test={this.props.state} />
@@ -45,7 +64,8 @@ var mapStateToProps = function(state, props) {
 		handOne: state.handOne,
 		handTwo: state.handTwo,
 		handThree: state.handThree,
-		handFour: state.handFour
+		handFour: state.handFour,
+		prevMove: state.prevMove
 	};
 };
 
