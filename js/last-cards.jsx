@@ -2,7 +2,7 @@ var React = require('react');
 var connect = require('react-redux').connect;
 var actions = require('./actions');
 
-function Cards(props) {
+function LastCards(props) {
   return (
     <li key={props.card.code}>
       <img
@@ -15,4 +15,4 @@ function Cards(props) {
   );
 }
 
-module.exports = Cards;
+module.exports = LastCards;

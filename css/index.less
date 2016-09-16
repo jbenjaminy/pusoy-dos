@@ -66,7 +66,7 @@ html {
 				.felt {
 					background-image: url(./green-felt.png);
 					border: 2px solid @text;
-					height: 525px;
+					height: 575px;
 					width: 800px;
 					margin: 0 auto;
 					border-radius: 10px;
@@ -102,15 +102,43 @@ html {
 					.mid {
 						height: 190px;
 
-						.player-two, .player-four {
-							display: inline-block;
-							width: 20%;
-							margin-top: 20px;
+
+						.item {
+							display: block;
+							width: 100%;
 						}
-						.board {
-							display: inline-block;
-							width: 60%;
-							margin-top: 20px;
+						ul.board {
+							height: 80px;
+							width: 285px;
+							padding-left: 0px;
+							margin-top: -80px;
+							z-index: 99;
+							display: block;
+							border: 1px solid @text;
+							margin-left: auto;
+							margin-right: auto;
+						}
+
+						ul.board.shift {
+							height: 80px;
+							width: 285px;
+							padding-left: 0px;
+							margin-top: -137px;
+							z-index: 3;
+							border: 1px solid @text;
+							display: block;
+							margin-left: auto;
+							margin-right: auto;
+						}
+						.player-two {
+							margin-left: -250px;
+							z-index: 2;
+						}
+						.player-four {
+							margin-left: 250px;
+							margin-top: -161px;
+							z-index: 2;
+							
 						}
 					}
 					.player-one {

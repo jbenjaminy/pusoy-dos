@@ -2,7 +2,7 @@ var React = require('react');
 var connect = require('react-redux').connect;
 var actions = require('./actions');
 var Player = require('./player');
-var Cards = require('./last-cards');
+var LastCards = require('./last-cards');
 
 
 var Felt = React.createClass({
@@ -24,12 +24,18 @@ var Felt = React.createClass({
 				</div>
 			);
 		}
+		console.log('state', this.props.state);
+
+		var boardClasses = 'board ';
+		if (this.props.turn === 'handTwo') {
+			boardClasses += 'shift';
+		}
 
 		var lastMove = [];
 		if (this.props.prevMove) {
 			this.props.prevMove.cards.forEach(function(card, idx) {
 				lastMove.push(
-					<Cards
+					<LastCards
 				  	card={card}
 					 	classList={'card'}
 						key={idx}
@@ -42,9 +48,7 @@ var Felt = React.createClass({
 			<div className='felt'>
 				<Player id='player-three' name='Player Three' hand='handThree' test={this.props.state} />
 				<div className='mid'>
-					<Player id='player-two' name='Player Two' hand='handTwo' test={this.props.state} />
-					<div className='board'>{lastMove}</div>
-					<Player id='player-four' name='Player Four' hand='handFour' test={this.props.state} />
+					<Player id='player-two item' name='Player Two' hand='handTwo' test={this.props.state} /><ul className={boardClasses}>{lastMove}</ul><Player id='player-four item' name='Player Four' hand='handFour' test={this.props.state} />				
 				</div>
 				<Player id='player-one' name='Player One' hand='handOne' test={this.props.state} />
 			</div>
@@ -61,7 +65,8 @@ var mapStateToProps = function(state, props) {
 		handTwo: state.handTwo,
 		handThree: state.handThree,
 		handFour: state.handFour,
-		prevMove: state.prevMove
+		prevMove: state.prevMove,
+		turn: state.turn
 	};
 };
 

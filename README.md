@@ -3,10 +3,11 @@ Deck of Cards API: http://deckofcardsapi.com/
 
 ## TO-DO:
 	# PRIORITIES:
-		1) Fix select/unselect cards.
-		2) Add buttons to board to play cards/skip turn
+		*1) Fix select/unselect cards.
+		*2) Add buttons to board to play cards/skip turn
 		3) Write adjustments for discarding played cards (should we use 'piles' from Deck of Cards API?)
-		4) Write game logic.
+		*4) Write game logic.
+		*5) Allow player to win, keep running scores for each player, be able to play consecutive games, advance 'dealer' between each game
 		5) Sort cards in each hand by ranking.
 		6) Move all logic to backend. 
 		7) Implement socket.io
@@ -57,6 +58,8 @@ Deck of Cards API: http://deckofcardsapi.com/
 				just sort cards in move and in previous move and compare card.rank of highest card
 			-for full House/four of a kind:
 				find out which card value equals 3 or 4 of the cards in the hand, and compare the ranking of any of those with the ranking of any of the equiv. in the last hand.
+				333
+				444
 
 Details from wiki:
 "Single card: Cards rank from 2 (highest) to 3 (lowest). Between cards of the same rank, the higher suit beats the lower suit. That is, a 5♦ beats a 5♥.
