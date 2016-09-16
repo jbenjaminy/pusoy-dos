@@ -23,38 +23,69 @@ function isHandValid(hand) {
     return true;
 }
 
-function handType(hand) {
-    if (cardNum === 5) {
-        var isStraight = true;
-        var isFlush = true;
-        var isFullHouse = true;
+function whatHand(hand) {
+    var isStraight = true;
+    var isFlush = true;
+    var isFullHouse = true;
+    var isFour = true;
 
-        var values = [];
-        hand.forEach(function(card) {
-            if (card.value === 'JACK') {
-                var value = 11;
-            } else if (card.value === 'QUEEN') {
-                value = 12;
-            } else if (card.value === 'KING') {
-                value = 13;
-            } else if (card.value === 'ACE') {
-                value = 14;
-            } else {
-                value = parseInt(card.value);
-            }
+    var straightFlush = 7;
+    var fourOfKind = 6;
+    var fullHouse = 5;
+    var flush = 4;
+    var straight = 3;
+    var triple = 2;
+    var pair = 1;
+    var single = 0;
 
-            values.push(value);
-        });
+    var values = [];
+    hand.forEach(function(card) {
+        if (card.value === 'JACK') {
+            var value = 11;
+        } else if (card.value === 'QUEEN') {
+            value = 12;
+        } else if (card.value === 'KING') {
+            value = 13;
+        } else if (card.value === 'ACE') {
+            value = 14;
+        } else {
+            value = parseInt(card.value);
+        }
 
-        var suits = [];
-        hand.forEach(function(card) {
-            suits.push(card.suit);
-        });
+        values.push(value);
+    });
 
-        values.sort(function(a, b) {
-            return a > b;
-        });
+    var suits = [];
+    hand.forEach(function(card) {
+        suits.push(card.suit);
+    });
 
+    values.sort(function(a, b) {
+        return a > b;
+    });
+
+    if (hand.length === 1) {
+        return {
+            suit: suits[0],
+            high: hand[0].rank,
+            rank: single,
+        }
+    } else if (hand.length === 2) {
+        var highCard = high[0].rank > high[1].rank ? high[0] : high[1];
+        return {
+            suit: null,
+            high: highCard,
+            rank: pair,
+        }
+    } else if (hand.length === 3) {
+        var highCard = high[0].rank > high[1].rank ? high[0] : high[1];
+        highCard = highCard.rank > high[2].rank ? highCard : high[2];
+        return {
+            suit: highCard.suit,
+            high: highCard.rank,
+            rank: triple,
+        }
+    } else if (hand.length === 5) {
         // CHECKS FOR STRAIGHT
         var straightVal = values[0];
         for (var i = 0; i < values.length; i += 1) {
@@ -90,11 +121,72 @@ function handType(hand) {
             isFullHouse = false;
         }
 
-        if (isStraight || isFlush || isFullHouse) {
-            return true;
+        var overVal;
+        if (over.length === 3) {
+            overVal = numOne;
         }
 
-        return false;
+        if (under.length === 3) {
+            overVal = numTwo;
+        }
+
+        // CHECKS FOR FOUR OF A KIND
+        var highCheck = values.filter(function(value) {
+            return value === values[4];
+        });
+
+        var lowCheck = values.filter(function(value) {
+            return value === values[0];
+        });
+
+        var quadNum;
+        if (!(highCheck.length === 4 || lowCheck.length === 4)) {
+            isFour = false;
+        }
+
+        if (highCheck.length === 4) {
+            quadNum = values[4];
+        } else if (lowCheck.length === 4) {
+            quadNum = values[0];
+        }
+    }
+
+    if (isStraight && isFlush) {
+        return {
+            suit: flushSuit,
+            high: values[4],
+            rank: straightFlush,
+        }
+    } else if (isFour) {
+        return {
+            suit: null,
+            high: quadNum,
+            rank: fourOfKind,
+        }
+    } else if (isFullHouse) {
+        return {
+            suit: null,
+            high: overVal,
+            rank: fullHouse,
+        }
+    } else if (isFlush) {
+        return {
+            suit: flushSuit,
+            high: values[4],
+            rank: flush,
+        }
+    } else if (isStraight) {
+        return {
+            suit: null,
+            high: values[4],
+            rank: straight,
+        }
+    } else {
+        return {
+            suit: null,
+            high: null,
+            rank: null,
+        }
     }
 }
 
@@ -186,7 +278,7 @@ var reducers = function(state, action) {
     } else if (action.type === actions.PLAY_CARDS) {
         var playedHand;
         var isValid = isHandValid(action.cards);
-
+        var handRank = whatHand(action.cards);
         console.log(isValid);
 
 /*
