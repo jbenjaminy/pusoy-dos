@@ -58,6 +58,8 @@ function whatHand(hand) {
             value = 13;
         } else if (card.value === 'ACE') {
             value = 14;
+        } else if (card.value === '2') {
+            value = 15;
         } else {
             value = parseInt(card.value);
         }
@@ -303,7 +305,7 @@ var reducers = function(state, action) {
 
         if (state.prevMove && state.passes < 3) {
             var lastMove = state.prevMove.info;
-            if (lastMove.rank !== handRank.rank && act.cards.length !== 5) {
+            if (lastMove.rank !== handRank.rank && action.cards.length !== 5) {
                 return state;
             } else if (action.cards.length === 5) {
                 if (handRank.rank < lastMove.rank) {
