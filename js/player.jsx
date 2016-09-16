@@ -40,13 +40,15 @@ var Player = React.createClass({
 		var showHand = eval(`this.props.show${currentHand}`);
 
 		if (!showHand) {
-			var cardsArr = <Cards
-										   card={{code: 'back', image: 'card-back-blue.png'}}
-											 classList={'card'}
-											 handNum={this.props.hand}
-											 selectCard={this.selectCard}
-											 key={1}
-										 />
+			var cardsArr = (
+				<Cards
+			  	card={{code: 'back', image: 'card-back-blue.png'}}
+				 	classList={'card'}
+				 	handNum={this.props.hand}
+					selectCard={this.selectCard}
+					key={1}
+				/>
+			);
 		} else {
 			var cardsArr = cards.map(function(card, idx) {
 				var classList = card.selected ? 'card selected' : 'card';

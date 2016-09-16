@@ -20,11 +20,14 @@ function isHandValid(hand) {
         return false;
     }
 
+    return true;
+}
+
+function handType(hand) {
     if (cardNum === 5) {
-        var isStraight;
-        var isFlush;
-        var isFullHouse;
-        var isStraightFlush;
+        var isStraight = true;
+        var isFlush = true;
+        var isFullHouse = true;
 
         var values = [];
         hand.forEach(function(card) {
@@ -37,27 +40,61 @@ function isHandValid(hand) {
             } else if (card.value === 'ACE') {
                 value = 14;
             } else {
-                value = card.value;
+                value = parseInt(card.value);
             }
-            
+
             values.push(value);
+        });
+
+        var suits = [];
+        hand.forEach(function(card) {
+            suits.push(card.suit);
         });
 
         values.sort(function(a, b) {
             return a > b;
         });
-    }
 
-    if (!state.prevMove && hand.length ) {
-        playedHand = hand;
-    } else if (hand.length !== state.prevMove.length) {
-        return state;
-    } else {
-        if (hand.length === 1 && hand[0].rank > state.prevMove[0].rank) {
-            playedHand = hand;
-        } else if (hand.length === 2 && hand[0].value === action.cards[1].value) {
-            console.log('double');
+        // CHECKS FOR STRAIGHT
+        var straightVal = values[0];
+        for (var i = 0; i < values.length; i += 1) {
+            if (values[i] !== straightVal) {
+                isStraight = false;
+                break;
+            }
+
+            straightVal += 1;
         }
+
+        // CHECKS FOR FLUSH
+        var flushSuit = suits[0];
+        for (var i = 0; i < suits.length; i += 1) {
+            if (suits[i] !== flushSuit) {
+                isFlush = false;
+                break;
+            }
+        }
+
+        // CHECKS FOR FULL HOUSE
+        var numOne = values[4];
+        var numTwo = values[0];
+        var over = values.filter(function(value) {
+            return value === numOne;
+        });
+
+        var under = values.filter(function(value) {
+            return value === numTwo;
+        });
+
+        if (!((over.length === 3 && under.length === 2) || (over.length === 2 && under.length === 3))) {
+            isFullHouse = false;
+        }
+
+        if (isStraight || isFlush || isFullHouse) {
+            return true;
+        }
+
+        return false;
     }
 }
 
@@ -149,6 +186,8 @@ var reducers = function(state, action) {
     } else if (action.type === actions.PLAY_CARDS) {
         var playedHand;
         var isValid = isHandValid(action.cards);
+
+        console.log(isValid);
 
 /*
 if (!state.prevMove && hand.length ) {
