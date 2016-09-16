@@ -9,7 +9,7 @@ var Player = React.createClass({
 	},
 
 	passTurn: function() {
-		// should have a counter of number of passes in a row
+		this.props.dispatch(actions.passTurn());
 	},
 
 	showHand: function(hand) {
@@ -34,6 +34,7 @@ var Player = React.createClass({
 		var classes = 'player ' + this.props.id;
 		var nameClasses = this.props.turn === this.props.hand ? 'name turn' : 'name';
 		var submitButton = this.props.turn === this.props.hand ? <button onClick={this.playCards}>Play Cards</button> : '';
+		var passButton = this.props.turn === this.props.hand ? <button onClick={this.passTurn}>Pass Turn</button> : '';
 
 		var cards = eval(`this.props.${this.props.hand}`);
 
@@ -70,6 +71,7 @@ var Player = React.createClass({
     		<ul>{cardsArr}</ul>
     		<button onClick={this.showHand(this.props.hand)}>View Cards</button>
 				<div>{submitButton}</div>
+				<div>{passButton}</div>
 	    </div>
     );
 	}

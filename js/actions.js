@@ -27,6 +27,13 @@ var select = function(code, hand) {
 	};
 };
 
+var PASS_TURN = 'PASS_TURN';
+var passTurn = function() {
+    return {
+        type: PASS_TURN,
+    };
+};
+
 var PLAY_CARDS = 'PLAY_CARDS';
 var playCards = function(cards) {
     return {
@@ -102,6 +109,9 @@ exports.select = select;
 
 exports.PLAY_CARDS = PLAY_CARDS;
 exports.playCards = playCards;
+
+exports.PASS_TURN = PASS_TURN;
+exports.passTurn = passTurn;
 
 exports.shuffle = shuffle;
 exports.SHUFFLE_SUCCESS = SHUFFLE_SUCCESS;

@@ -4,10 +4,12 @@ function isHandValid(hand, moves) {
     var cardNum = hand.length;
 
     if (cardNum < 1 || cardNum === 4 || cardNum > 5) {
+        console.log('first');
         return false;
     }
 
     if (cardNum === 2 || cardNum === 3) {
+        console.log('second');
         var value = hand[0].value;
         var testHand = hand.filter(function(card) {
             return card.value === value;
@@ -21,6 +23,7 @@ function isHandValid(hand, moves) {
     }
 
     if (moves === 0) {
+        console.log('third');
         var threeClubs = hand.filter(function(card) {
             return card.code === '3C';
         });
@@ -284,16 +287,25 @@ var reducers = function(state, action) {
             handFour: handFour,
             selected: selectedArr,
         });
+    } else if (action.type === actions.PASS_TURN) {
+        var players = ['handOne', 'handTwo', 'handThree', 'handFour'];
+        var oldTurn = players.indexOf(state.turn);
+        return Object.assign({}, state, {
+            turn: players[(oldTurn + 1) % 4],
+            passes: state.passes + 1,
+            moves: state.moves + 1,
+        });
     } else if (action.type === actions.PLAY_CARDS) {
         var currentHand;
         var isValid = isHandValid(action.cards, state.moves);
         if (!isValid) {
             return state;
         }
+        console.log('past valid');
 
         var handRank = whatHand(action.cards);
 
-        if (state.prevMove) {
+        if (state.prevMove && state.passes < 3) {
             var lastMove = state.prevMove.info;
             if (lastMove.rank !== handRank.rank && act.cards.length !== 5) {
                 return state;
@@ -307,6 +319,7 @@ var reducers = function(state, action) {
                 return state;
             }
         }
+        console.log('bottom');
 
         var players = ['handOne', 'handTwo', 'handThree', 'handFour'];
         var oldTurn = players.indexOf(state.turn);
@@ -340,6 +353,7 @@ var reducers = function(state, action) {
                 info: handRank,
             },
             moves: state.moves + 1,
+            passes: 0,
         });
     } else if (action.type === actions.SHUFFLE_SUCCESS) {
     	var dealer = state.dealer;
@@ -422,6 +436,7 @@ var reducers = function(state, action) {
             showHandFour: false,
             turn: turn,
             moves: 0,
+            passes: 0,
     	});
     } else if (action.type === actions.SHUFFLE_ERROR) {
         return state;
