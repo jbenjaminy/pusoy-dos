@@ -1,6 +1,6 @@
 var actions = require('./actions');
 
-function isHandValid(hand) {
+function isHandValid(hand, moves) {
     var cardNum = hand.length;
 
     if (cardNum < 1 || cardNum === 4 || cardNum > 5) {
@@ -18,6 +18,16 @@ function isHandValid(hand) {
         }
 
         return false;
+    }
+
+    if (moves === 0) {
+        var threeClubs = hand.filter(function(card) {
+            return card.code === '3C';
+        });
+
+        if (threeClubs.length !== 1) {
+            return false;
+        }
     }
 
     return true;
@@ -276,7 +286,7 @@ var reducers = function(state, action) {
         });
     } else if (action.type === actions.PLAY_CARDS) {
         var currentHand;
-        var isValid = isHandValid(action.cards);
+        var isValid = isHandValid(action.cards, state.moves);
         if (!isValid) {
             return state;
         }
@@ -328,7 +338,8 @@ var reducers = function(state, action) {
             prevMove: {
                 cards: action.cards,
                 info: handRank,
-            }
+            },
+            moves: state.moves + 1,
         });
     } else if (action.type === actions.SHUFFLE_SUCCESS) {
     	var dealer = state.dealer;
@@ -410,6 +421,7 @@ var reducers = function(state, action) {
             showHandThree: false,
             showHandFour: false,
             turn: turn,
+            moves: 0,
     	});
     } else if (action.type === actions.SHUFFLE_ERROR) {
         return state;
