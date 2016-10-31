@@ -21,7 +21,8 @@
     "clean:js": "rm -f build/$npm_package_name.$npm_package_version.js build/$npm_package_name.$npm_package_version.js.map",
     "build:img": "npm run clean:img && cp -r img/ build/",
     "clean:img": "rm -rf build/img/",
-    "watch:img": "npm run build:img && webpack --watch"
+    "watch:img": "npm run build:img && webpack --watch",
+    "heroku-postbuild": "npm run build"
   },
   "babel": {
     "presets": [
@@ -29,14 +30,21 @@
       "react"
     ]
   },
-  "author": "",
+  "author": "Ben Young & Robby Kim",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbenjaminy/pusoy-dos.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jbenjaminy/pusoy-dos/issues"
+  },
+  "homepage": "http://pusoy-dos.jbenjaminy.com",
   "dependencies": {
     "body-parser": "^1.15.2",
     "events": "^1.1.1",
     "express": "^4.14.0",
     "isomorphic-fetch": "^2.2.1",
-    "less": "^2.7.1",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-redux": "^4.4.5",
@@ -51,6 +59,7 @@
     "babel-preset-react": "^6.11.1",
     "chokidar-cli": "^1.2.0",
     "http-server": "^0.9.0",
+    "less": "^2.7.1",
     "webpack": "^1.13.1"
   }
 }
