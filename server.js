@@ -41,11 +41,11 @@ app.get('/shuffle', function(request, response) {
   var hands = [[], [], [], []];
   var firstMove = null;
   // shuffles existing deck of cards
-  var shuffleDeck = getFromApi('ouk03xkvphxp/shuffle', {
+  var shuffleDeck = getFromApi('29n7cw92l259/shuffle', {
   });
   shuffleDeck.on('end', function(shuffledDeck) {
     // draws all 52 cards from shuffled deck, returning an object for each -- to be dealt
-    var dealCards = getFromApi('ouk03xkvphxp/draw', {
+    var dealCards = getFromApi('29n7cw92l259/draw', {
       count: 52
     });
     dealCards.on('end', function(dealtDeck) {
