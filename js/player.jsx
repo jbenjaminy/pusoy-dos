@@ -43,7 +43,7 @@ var Player = React.createClass({
 		if (!showHand) {
 			var cardsArr = (
 				<Cards
-			  	card={{code: 'back', image: 'card-back-blue.png'}}
+			  	card={{code: 'back', image: 'http://i.imgur.com/8gfHCML.png'}}
 				 	classList={'card'}
 				 	handNum={this.props.hand}
 					selectCard={this.selectCard}
