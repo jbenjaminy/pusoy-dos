@@ -41,11 +41,11 @@ app.get('/shuffle', function(request, response) {
   var hands = [[], [], [], []];
   var firstMove = null;
   // shuffles existing deck of cards
-  var shuffleDeck = getFromApi('29n7cw92l259/shuffle', {
+  var shuffleDeck = getFromApi('lgri05taclun/shuffle', {
   });
   shuffleDeck.on('end', function(shuffledDeck) {
     // draws all 52 cards from shuffled deck, returning an object for each -- to be dealt
-    var dealCards = getFromApi('29n7cw92l259/draw', {
+    var dealCards = getFromApi('lgri05taclun/draw', {
       count: 52
     });
     dealCards.on('end', function(dealtDeck) {
@@ -80,7 +80,7 @@ app.get('/shuffle', function(request, response) {
         } else if (suit === 'HEARTS') {
           rank = rank - 1;
         }
-        // get index for hand containing the lowest card (3C) for first move 
+        // get index for hand containing the lowest card (3C) for first move
         if (rank === 1) {
           firstMove = index%4
         }
